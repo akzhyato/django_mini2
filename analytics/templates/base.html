@@ -1,0 +1,33 @@
+<!-- your_app/templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>{% block title %}My Course App{% endblock %}</title>
+
+    <!-- Google Analytics integration -->
+    {% if google_analytics_id %}
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id={{ google_analytics_id }}"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', '{{ google_analytics_id }}');
+    </script>
+    {% endif %}
+  </head>
+  <body>
+    {% block content %}
+    <!-- Content will be rendered here -->
+    {% endblock %}
+  </body>
+</html>

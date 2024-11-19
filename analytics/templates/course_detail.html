@@ -1,0 +1,7 @@
+<!-- your_app/templates/course_detail.html -->
+{% extends 'base.html' %} {% block title %}Course Details - {{ course.title }}{%
+endblock %} {% block content %}
+<h1>{{ course.title }}</h1>
+<p>{{ course.description }}</p>
+<!-- Additional course details here -->
+{% endblock %}
