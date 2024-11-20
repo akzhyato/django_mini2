@@ -8,6 +8,7 @@ logger = logging.getLogger('courses')
 @receiver(post_save, sender=Enrollment)
 def log_course_enrollment(sender, instance, created, **kwargs):
     if created:
-        student_email = instance.student.user.email
+        student_email = getattr(instance.student.user, 'email', 'Unknown Email')    
         course_name = instance.course.name
-        logger.info(f"Студент {student_email} зачислен на курс {course_name}")
+        date_enrolled = instance.date_enrolled
+        logger.info(f"Student {student_email} enrolled in course {course_name} on {date_enrolled}")

@@ -15,7 +15,7 @@ def send_daily_attendance_reminder():
         send_mail(
             'Attendance Reminder',
             'Please mark your attendance for today.',
-            'system@kbtu.kz',
+            'admin@kbtu.kz',
             [student.email],
             fail_silently=False,
         )
@@ -24,7 +24,7 @@ def send_daily_attendance_reminder():
 def send_grade_update_notification(student_email, course_name, grade_value):
     subject = f'Обновление оценки по курсу {course_name}'
     message = f'Ваша оценка по курсу {course_name} была обновлена до {grade_value}.'
-    from_email = 'system@kbtu.kz'
+    from_email = 'admin@kbtu.kz'
     to_email = [student_email]
 
     send_mail(
@@ -46,7 +46,7 @@ def send_weekly_performance_email():
         send_mail(
             'Еженедельное обновление успеваемости',
             message,
-            'system@kbtu.kz',
+            'admin@kbtu.kz',
             [student.email],
             fail_silently=False,
         )
@@ -75,7 +75,7 @@ def send_daily_report():
         report_data.append(student_data)
 
     subject = f'Ежедневный отчет за {today.strftime("%d.%m.%Y")}'
-    from_email = 'system@kbtu.kz'
+    from_email = 'admin@kbtu.kz'
     to_emails = [admin.email for admin in CustomUser.objects.filter(role='admin')]
 
     message = render_to_string('daily_report_email.html', {'report_data': report_data, 'date': today})

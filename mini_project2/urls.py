@@ -37,9 +37,9 @@ urlpatterns = [
     path('api/notifications/', include('notifications.urls')),  
     path('api/analytics/', include('analytics.urls')),
     path('api/users/', include('users.urls')),
-        path('docs/', TemplateView.as_view(
+    path('docs/', TemplateView.as_view(
         template_name='docs.html',
-        extra_context={'schema_url':'api_schema'}
+        extra_context={'schema_url': 'api_schema'}
     ), name='swagger-ui'),
     path('api_schema/', schema_view, name='api_schema'),
-]
+]   

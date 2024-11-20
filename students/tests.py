@@ -8,7 +8,6 @@ from users.models import CustomUser
 
 class AttendanceTests(TestCase):
     def setUp(self):
-        # Create users
         self.teacher = CustomUser.objects.create_user(
             username="teacher1", email="teacher1@example.com", password="password", role="teacher"
         )

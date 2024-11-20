@@ -154,6 +154,7 @@ REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
         'user': '100/day',  # 100 requests per user per day
     },
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.openapi.AutoSchema',
 }
 
 
@@ -176,22 +177,132 @@ CELERY_RESULT_BACKEND = 'django-db'  # Use the Django database as the result bac
 # Optional: Celery timezone settings
 CELERY_TIMEZONE = 'UTC'
 
+
+
 # CACHES = {
-#     'default': {
-#         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-#         'LOCATION': '127.0.0.1:11211',
+#     "default": {
+#         "BACKEND": "django_redis.cache.RedisCache",
+#         "LOCATION": "redis://127.0.0.1:6379/1",
+#         "OPTIONS": {
+#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+#         }
 #     }
 # }
 
 
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'file': {
+#             'level': 'DEBUG',
+#             'class': 'logging.FileHandler',
+#             'filename': 'logs/django.log',
+#         },
+#         'console': {
+#             'level': 'DEBUG',
+#             'class': 'logging.StreamHandler',
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['file', 'console'],
+#             'level': 'DEBUG',
+#             'propagate': True,
+#         },
+#         'django.request': {
+#             'handlers': ['file', 'console'],
+#             'level': 'ERROR',
+#             'propagate': False,
+#         },
+#         'myapp': {  # Custom logger for your app
+#             'handlers': ['file', 'console'],
+#             'level': 'INFO',
+#             'propagate': True,
+#         },
+#     },
+# }
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379/1',  # Redis connection URL
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {name} {message}',
+            'style': '{',
         },
-        'TIMEOUT': 60 * 15,  # Default cache timeout (15 minutes)
-    }
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'file_grades': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/grades.log',
+            'formatter': 'verbose',
+            'encoding': 'utf-8',
+        },
+        'file_attendance': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/attendance.log',
+            'formatter': 'verbose',
+            'encoding': 'utf-8',
+        },
+        'file_courses': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/courses.log',
+            'formatter': 'verbose',
+            'encoding': 'utf-8',
+        },
+        'file_students': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/students.log',
+            'formatter': 'verbose',
+            'encoding': 'utf-8',
+        },
+        'file_users': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/users.log',
+            'formatter': 'verbose',
+            'encoding': 'utf-8',
+        },
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+    },
+    'loggers': {
+        'grades': {
+            'handlers': ['file_grades', 'console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'attendance': {
+            'handlers': ['file_attendance', 'console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'courses': {
+            'handlers': ['file_courses', 'console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'students': {
+            'handlers': ['file_students', 'console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'users': {
+            'handlers': ['file_users', 'console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
 }

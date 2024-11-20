@@ -7,11 +7,13 @@ logger = logging.getLogger('attendance')
 
 @receiver(post_save, sender=Attendance)
 def log_attendance_marking(sender, instance, created, **kwargs):
-    student_email = instance.student.user.email
+    student_email = getattr(instance.student.user, 'email', 'Unknown Email')  
     course_name = instance.course.name
     date = instance.date
     status = instance.status
+
     if created:
-        logger.info(f"Посещаемость отмечена: студент {student_email}, курс {course_name}, дата {date}, статус {status}")
+        logger.info(f"Attendance marked: student {student_email}, course {course_name}, date {date}, status {status}")
     else:
-        logger.info(f"Посещаемость обновлена: студент {student_email}, курс {course_name}, дата {date}, статус {status}")
+        if 'status' in kwargs and kwargs['status'] != status:
+            logger.info(f"Attendance updated: student {student_email}, course {course_name}, date {date}, status {status}")
